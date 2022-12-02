@@ -1,17 +1,34 @@
 -- Challenge Bonus queries.
 -- 1. (2.5 pts)
 -- Retrieve all the number of backer_counts in descending order for each `cf_id` for the "live" campaigns. 
-
-
+SELECT cf_id, SUM (backers_count)
+INTO backer_count_cf_id
+FROM campaign
+WHERE outcome = 'live'
+GROUP BY cf_id
+ORDER BY SUM DESC;
 
 -- 2. (2.5 pts)
 -- Using the "backers" table confirm the results in the first query.
 
-
+SELECT * FROM backer_count_cf_id, 
 
 -- 3. (5 pts)
 -- Create a table that has the first and last name, and email address of each contact.
 -- and the amount left to reach the goal for all "live" projects in descending order. 
+
+SELECT 
+	first_name,
+	last_name,
+	email
+--INTO amount_left_by_contact 
+FROM campaign as ca
+RIGHT JOIN contacts as co
+ON co.contact_id = ca.contact_id
+WHERE outcome = 'live'
+GROUP BY first_name,
+	last_name,
+	email
 
 
 
